@@ -1,0 +1,28 @@
+config:
+  target: 'http://localhost:3030'
+  phases:
+    - duration: 10
+      arrivalRate: 1
+    # - duration: 60
+    #   arrivalRate: 5
+    #   rampTo: 25          
+  payload:
+    path: shows.csv
+    fields: ["title","directory","tvrage","TVmaze","startDate","endDate","numberOfEpisodes","runTime","network","country"]
+  
+
+scenarios:
+  - flow:
+    - post:
+        url: "/insertshow"
+        json: 
+          title: "{{title}}"
+          directory: "{{directory}}"
+          tvrage: "{{tvrage}}"
+          TVmaze: "{{TVmaze}}"
+          startDate: "{{startDate}}"
+          endDate: "{{endDate}}"
+          numberOfEpisodes: "{{numberOfEpisodes}}"
+          runTime: "{{runTime}}"
+          network: "{{network}}"
+          country: "{{country}}"

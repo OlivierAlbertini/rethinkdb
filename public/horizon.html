@@ -1,0 +1,50 @@
+<html>
+<head>
+
+  <style type="text/css">
+    html {
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      font-family:
+        "HelveticaNeue-Light",
+        "Helvetica Neue Light",
+        "Helvetica Neue",
+        Helvetica,
+        Arial,
+        "Lucida Grande",
+        sans-serif;      
+    }
+    body {
+      text-align: center;
+    }
+    #title {
+      font-size: 1.5em;
+    }
+  </style>
+
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>  
+<script src="/horizon/horizon.js"></script>
+
+<script>
+// Specify the host property for initializing the Horizon connection
+const hz = new Horizon();
+// hz.currentUser().fetch().subscribe( (user) => console.log(JSON.stringify(user)) );
+const listings = hz("tv_history")
+
+listings.watch().subscribe((docs) => { 
+  for (doc of docs) {
+      $("#records").prepend(doc.title + ', Episodes: ' + doc.numberOfEpisodes + ', Start: ' + doc.startDate + ', Run Time: ' + doc.runTime + '<br>');
+  } 
+})
+
+</script>
+</head>
+<body>
+
+  <div id="title">
+  Records:
+  </div>
+  <div id="records">
+  </div> 
+</body>
+</html>

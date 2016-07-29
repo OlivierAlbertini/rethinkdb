@@ -1,0 +1,57 @@
+
+<html>
+<head>
+  <style type="text/css">
+    html {
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      font-family:
+        "HelveticaNeue-Light",
+        "Helvetica Neue Light",
+        "Helvetica Neue",
+        Helvetica,
+        Arial,
+        "Lucida Grande",
+        sans-serif;      
+    }
+    body {
+      text-align: center;
+    }
+    #title {
+      font-size: 1.5em;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<script>
+	  var socket = io(); //io.connect('http://example.com:3333');
+    socket.on('insert', function (data) {
+      $("#records").prepend(data.obj.title + ', Episodes: ' + data.obj.numberOfEpisodes + ', Start: ' + data.obj.startDate + ', Run Time: ' + data.obj.runTime + '<br>');
+    });
+    // Whenever the server emits 'new message', update the chat body
+    socket.on('new message', function (data) {
+      $("#message").html(data.username + ': ' + data.message);
+    });   
+	</script>
+</head>
+<body>   
+  <div id="title">
+  Records:
+  </div>
+  <div id="records">
+  </div>  
+
+  <script>
+    $( "#target" ).click(function() {
+      socket.emit('addUser', 'Fred Flinstone');
+    }); 
+    $( "#messageTarget" ).click(function() {
+      console.log('messageTarget fired')
+      socket.emit('new message', 'Fred Flinstone');
+    });     
+    </script>
+
+</body>
+</html>
+
+
